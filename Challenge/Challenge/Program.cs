@@ -23,6 +23,11 @@ namespace Challenge
 
         }
 
+        /// <summary>
+        /// Finds the sum of each row in a 2-dimensional array of integers.
+        /// </summary>
+        /// <param name="array2d">The 2-dimensional array being added together.</param>
+        /// <returns>A single-dimensional array containing all of the row's sums.</returns>
         static int[] SumOfRows(int[,] array2d)
         {
             int[] sumArray = new int[array2d.GetLength(0)];
@@ -36,6 +41,10 @@ namespace Challenge
             return sumArray;
         }
 
+        /// <summary>
+        /// Prints an array of integers to the console.
+        /// </summary>
+        /// <param name="array">The array being printed.</param>
         static void PrintArray(int[] array)
         {
             Console.Write("{ ");
@@ -47,6 +56,10 @@ namespace Challenge
 
         }
 
+        /// <summary>
+        /// Prints a 2-dimensional array of integers to the console.
+        /// </summary>
+        /// <param name="array">The 2-dimensional array being printed.</param>
         static void Print2dArray(int[,] array)
         {
             Console.WriteLine("{");
@@ -63,17 +76,50 @@ namespace Challenge
             Console.WriteLine("\n}");
         }
 
+        /// <summary>
+        /// Gets an integer from user input.
+        /// </summary>
+        /// <param name="prompt">Text prompting the user for input.</param>
+        /// <returns>An integer from user input.</returns>
+        static int GetInt(string prompt)
+        {
+            int num;
+            bool success;
+            do
+            {
+                Console.Write(prompt);
+                success = Int32.TryParse(Console.ReadLine(), out num);
+                if (!success) Console.WriteLine("Invalid input. Please enter a whole number");
+            } while (!success);
+            return num;
+        }
+
+        /// <summary>
+        /// Randomly generates a 2-dimensional array with a length and width specified by the user.
+        /// </summary>
+        /// <returns>A 2-dimensional array.</returns>
+        static int[,] Generate2dArray()
+        {
+            int rows = GetInt("Enter number of rows: ");
+            int columns = GetInt("Enter number of columns: ");
+            int[,] array = new int[rows, columns];
+            Random rng = new Random();
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    array[i, j] = rng.Next(-10, 10);
+                }
+            }
+            return array;
+        }
+
         static void Main(string[] args)
         {
             // Challenge 4
-            int[,] testArray = new int[4, 4] {
-                { 1, 2, 3, 4 },
-                { 2, 4, 6, 8 },
-                { 3, 6, 9, 12 },
-                { 4, 8, 12, 16 },
-            };
+            int[,] testArray = Generate2dArray();
 
-            Console.WriteLine("Input:");
+            Console.WriteLine("\nInput:");
             Print2dArray(testArray);
 
             int[] sumArray = SumOfRows(testArray);
