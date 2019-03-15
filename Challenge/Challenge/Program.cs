@@ -13,9 +13,20 @@ namespace Challenge
 
         }
 
-        static void LeapYearCalculator()
+        /// <summary>
+        /// Determines if a year is a leap year or not.
+        /// </summary>
+        /// <param name="year">The year being checked.</param>
+        /// <returns>True if the year is a leap year, else false.</returns>
+        static bool LeapYearCalculator(int year)
         {
-
+            if (year % 4 == 0)
+            {
+                if (year % 400 == 0) return true;
+                else if (year % 100 == 0) return false;
+                else return true;
+            }
+            else return false;
         }
 
         /// <summary>
@@ -164,11 +175,17 @@ namespace Challenge
 
         static void Main(string[] args)
         {
+            // Challenge 2
+            int year = GetInt("Enter a year: ");
+            Console.WriteLine($"{year} is{(LeapYearCalculator(year) ? "" : " not")} a leap year.");
+
+
             // Challenge 3
-            int[] sequence = GenerateArray();
-            PrintArray(sequence);
-            if (PerfectSequence(sequence)) Console.WriteLine(" Is a perfect sequence!");
-            else Console.WriteLine(" Is not a perfect sequence.");
+
+            //int[] sequence = GenerateArray();
+            //PrintArray(sequence);
+            //if (PerfectSequence(sequence)) Console.WriteLine(" Is a perfect sequence!");
+            //else Console.WriteLine(" Is not a perfect sequence.");
 
             // Challenge 4
             //int[,] testArray = Generate2dArray();
