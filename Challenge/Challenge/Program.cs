@@ -6,6 +6,52 @@ namespace Challenge
     class Program
     {
         /// <summary>
+        /// Runs the Array Max Result program.
+        /// </summary>
+        static void Challenge1()
+        {
+            int[] array = GenerateArray(5);
+            int result = ArrayMaxResult(array, GetInt("Pick a number: "));
+            Console.WriteLine($"Score: {result}");
+        }
+
+        /// <summary>
+        /// Runs the Leap Year Calculator program.
+        /// </summary>
+        static void Challenge2()
+        {
+            int year = GetInt("Enter a year: ");
+            Console.WriteLine($"{year} is{(LeapYearCalculator(year) ? "" : " not")} a leap year.");
+        }
+
+        /// <summary>
+        /// Runs the Perfect Sequence program.
+        /// </summary>
+        static void Challenge3()
+        {
+            int[] sequence = GenerateArray();
+            PrintArray(sequence);
+            if (PerfectSequence(sequence)) Console.WriteLine(" Is a perfect sequence!");
+            else Console.WriteLine(" Is not a perfect sequence.");
+        }
+
+        /// <summary>
+        /// Runs the Sum of Rows program.
+        /// </summary>
+        static void Challenge4()
+        {
+            int[,] testArray = Generate2dArray();
+
+            Console.WriteLine("\nInput:");
+            Print2dArray(testArray);
+
+            int[] sumArray = SumOfRows(testArray);
+
+            Console.WriteLine("\nOutput:");
+            PrintArray(sumArray);
+            Console.WriteLine();
+        }
+        /// <summary>
         /// Computes a score based on the frequency of a given number in an array.
         /// </summary>
         /// <param name="array">The array being checked.</param>
@@ -197,36 +243,62 @@ namespace Challenge
             return array;
         }
 
+        /// <summary>
+        /// Displays the main menu.
+        /// </summary>
+        static void ListPrograms()
+        {
+            Console.Clear();
+            Console.WriteLine("Choose a program: ");
+            Console.WriteLine("1) Array Max Result");
+            Console.WriteLine("2) Leap Year Calculator");
+            Console.WriteLine("3) Perfect Sequence");
+            Console.WriteLine("4) Sum of Rows");
+            Console.WriteLine("Enter any other number to quit.");
+        }
+
+        /// <summary>
+        /// Requires that the user press a key before the program continues.
+        /// </summary>
+        static void PressKeyToContinue()
+        {
+            Console.WriteLine("\nPress any key to continue.");
+            Console.ReadKey();
+        }
+
         static void Main(string[] args)
         {
-            // Challenge 1
-            int[] array = GenerateArray(5);
-            int result = ArrayMaxResult(array, GetInt("Pick a number: "));
-            Console.WriteLine($"Score: {result}");
-
-            // Challenge 2
-            //int year = GetInt("Enter a year: ");
-            //Console.WriteLine($"{year} is{(LeapYearCalculator(year) ? "" : " not")} a leap year.");
-
-            // Challenge 3
-
-            //int[] sequence = GenerateArray();
-            //PrintArray(sequence);
-            //if (PerfectSequence(sequence)) Console.WriteLine(" Is a perfect sequence!");
-            //else Console.WriteLine(" Is not a perfect sequence.");
-
-            // Challenge 4
-            //int[,] testArray = Generate2dArray();
-
-            //Console.WriteLine("\nInput:");
-            //Print2dArray(testArray);
-
-            //int[] sumArray = SumOfRows(testArray);
-
-            //Console.WriteLine("\nOutput:");
-            //PrintArray(sumArray);
-
-            Console.ReadKey();
+            bool go = true;
+            do
+            {
+                ListPrograms();
+                switch (GetIntGreaterThanZero("\n> "))
+                {
+                    case 1:
+                        Console.Clear();
+                        Challenge1();
+                        PressKeyToContinue();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Challenge2();
+                        PressKeyToContinue();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Challenge3();
+                        PressKeyToContinue();
+                        break;
+                    case 4:
+                        Console.Clear();
+                        Challenge4();
+                        PressKeyToContinue();
+                        break;
+                    default:
+                        go = false;
+                        break;
+                }
+            } while (go);
         }
     }
 }
