@@ -6,11 +6,19 @@ namespace Challenge
     class Program
     {
         /// <summary>
-        /// 
+        /// Computes a score based on the frequency of a given number in an array.
         /// </summary>
-        static void ArrayMaxResult()
+        /// <param name="array">The array being checked.</param>
+        /// <param name="num">The number being looked for.</param>
+        /// <returns>The number being looked for multiplied by how many times it appears in the array.</returns>
+        static int ArrayMaxResult(int[] array, int num)
         {
-
+            int score = 0;
+            foreach (int i in array)
+            {
+                if (i == num) score += num;
+            }
+            return score;
         }
 
         /// <summary>
@@ -43,9 +51,9 @@ namespace Challenge
         /// Generates a single-dimensional array from user input.
         /// </summary>
         /// <returns>The generated array.</returns>
-        static int[] GenerateArray()
+        static int[] GenerateArray(int length = 0)
         {
-            int length = GetInt("Enter array length: ");
+            if (length == 0) length = GetIntGreaterThanZero("Enter array length: ");
             int[] array = new int[length];
             for (int i = 0; i < length; i++)
             {
@@ -148,8 +156,24 @@ namespace Challenge
             {
                 Console.Write(prompt);
                 success = Int32.TryParse(Console.ReadLine(), out num);
-                if (!success) Console.WriteLine("Invalid input. Please enter a whole number");
+                if (!success) Console.WriteLine("Invalid input. Please enter a whole number.");
             } while (!success);
+            return num;
+        }
+
+        /// <summary>
+        /// Gets an integer greater than 0 from user input.
+        /// </summary>
+        /// <param name="prompt">Text prompting the user for input.</param>
+        /// <returns>An integer from user input.</returns>
+        static int GetIntGreaterThanZero(string prompt)
+        {
+            int num;
+            do
+            {
+                num = GetInt(prompt);
+                if (num <= 0) Console.WriteLine("Number must be greater than 0.");
+            } while (num <= 0);
             return num;
         }
 
@@ -159,8 +183,8 @@ namespace Challenge
         /// <returns>A 2-dimensional array.</returns>
         static int[,] Generate2dArray()
         {
-            int rows = GetInt("Enter number of rows: ");
-            int columns = GetInt("Enter number of columns: ");
+            int rows = GetIntGreaterThanZero("Enter number of rows: ");
+            int columns = GetIntGreaterThanZero("Enter number of columns: ");
             int[,] array = new int[rows, columns];
             Random rng = new Random();
             for (int i = 0; i < rows; i++)
@@ -175,10 +199,14 @@ namespace Challenge
 
         static void Main(string[] args)
         {
-            // Challenge 2
-            int year = GetInt("Enter a year: ");
-            Console.WriteLine($"{year} is{(LeapYearCalculator(year) ? "" : " not")} a leap year.");
+            // Challenge 1
+            int[] array = GenerateArray(5);
+            int result = ArrayMaxResult(array, GetInt("Pick a number: "));
+            Console.WriteLine($"Score: {result}");
 
+            // Challenge 2
+            //int year = GetInt("Enter a year: ");
+            //Console.WriteLine($"{year} is{(LeapYearCalculator(year) ? "" : " not")} a leap year.");
 
             // Challenge 3
 
