@@ -10,8 +10,8 @@ namespace Challenge
         /// </summary>
         static void Challenge1()
         {
-            int[] array = GenerateArray(5);
-            int result = ArrayMaxResult(array, GetInt("Pick a number: "));
+            int[] array = GenerateArray(5, 1, 10);
+            int result = ArrayMaxResult(array, GetInt("Pick a number: ", 1, 10));
             Console.WriteLine($"Score: {result}");
         }
 
@@ -29,7 +29,7 @@ namespace Challenge
         /// </summary>
         static void Challenge3()
         {
-            int[] sequence = GenerateArray();
+            int[] sequence = GenerateArray(0,0);
             PrintArray(sequence);
             if (PerfectSequence(sequence)) Console.WriteLine(" Is a perfect sequence!");
             else Console.WriteLine(" Is not a perfect sequence.");
@@ -97,13 +97,13 @@ namespace Challenge
         /// Generates a single-dimensional array from user input.
         /// </summary>
         /// <returns>The generated array.</returns>
-        static int[] GenerateArray(int length = 0)
+        static int[] GenerateArray(int length = 0, int min = Int32.MinValue, int max = Int32.MaxValue)
         {
-            if (length == 0) length = GetIntGreaterThanZero("Enter array length: ");
+            if (length == 0) length = GetInt("Enter array length: ", 1);
             int[] array = new int[length];
             for (int i = 0; i < length; i++)
             {
-                array[i] = GetInt($"Enter a number ({i + 1} of {length}): ");
+                array[i] = GetInt($"Enter a number ({i + 1} of {length}): ", min, max);
             }
             return array;
         }
@@ -194,7 +194,7 @@ namespace Challenge
         /// </summary>
         /// <param name="prompt">Text prompting the user for input.</param>
         /// <returns>An integer from user input.</returns>
-        static int GetInt(string prompt)
+        static int GetInt(string prompt, int min = Int32.MinValue, int max = Int32.MaxValue)
         {
             int num;
             bool success;
@@ -203,23 +203,21 @@ namespace Challenge
                 Console.Write(prompt);
                 success = Int32.TryParse(Console.ReadLine(), out num);
                 if (!success) Console.WriteLine("Invalid input. Please enter a whole number.");
+                else
+                {
+                    if (num < min)
+                    {
+                        Console.WriteLine($"Number must be greater than or equal to {min}");
+                        success = false;
+                    }
+                    if (num > max)
+                    {
+                        Console.WriteLine($"Number must be less than or equal to {max}");
+                        success = false;
+                    }
+                    
+                }
             } while (!success);
-            return num;
-        }
-
-        /// <summary>
-        /// Gets an integer greater than 0 from user input.
-        /// </summary>
-        /// <param name="prompt">Text prompting the user for input.</param>
-        /// <returns>An integer from user input.</returns>
-        static int GetIntGreaterThanZero(string prompt)
-        {
-            int num;
-            do
-            {
-                num = GetInt(prompt);
-                if (num <= 0) Console.WriteLine("Number must be greater than 0.");
-            } while (num <= 0);
             return num;
         }
 
@@ -229,8 +227,8 @@ namespace Challenge
         /// <returns>A 2-dimensional array.</returns>
         static int[,] Generate2dArray()
         {
-            int rows = GetIntGreaterThanZero("Enter number of rows: ");
-            int columns = GetIntGreaterThanZero("Enter number of columns: ");
+            int rows = GetInt("Enter number of rows: ", 1);
+            int columns = GetInt("Enter number of columns: ", 1);
             int[,] array = new int[rows, columns];
             Random rng = new Random();
             for (int i = 0; i < rows; i++)
@@ -272,7 +270,7 @@ namespace Challenge
             do
             {
                 ListPrograms();
-                switch (GetIntGreaterThanZero("\n> "))
+                switch (GetInt("\n> "))
                 {
                     case 1:
                         Console.Clear();
