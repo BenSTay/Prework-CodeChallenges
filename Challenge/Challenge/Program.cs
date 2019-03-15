@@ -18,9 +18,44 @@ namespace Challenge
 
         }
 
-        static void PerfectSequence()
+        /// <summary>
+        /// Determines if the sum and product of a sequence of numbers are equal.
+        /// </summary>
+        /// <param name="array">The sequence of numbers being checked.</param>
+        /// <returns>true if the sequence is perfect, else false.</returns>
+        static bool PerfectSequence(int[] array)
         {
+            return ArraySum(array) == ArrayProduct(array);
+        }
 
+        /// <summary>
+        /// Generates a single-dimensional array from user input.
+        /// </summary>
+        /// <returns>The generated array.</returns>
+        static int[] GenerateArray()
+        {
+            int length = GetInt("Enter array length: ");
+            int[] array = new int[length];
+            for (int i = 0; i < length; i++)
+            {
+                array[i] = GetInt($"Enter a number ({i + 1} of {length}): ");
+            }
+            return array;
+        }
+
+        /// <summary>
+        /// Finds the product of a single-dimensional array of integers.
+        /// </summary>
+        /// <param name="array">A single-dimensional array of integers.</param>
+        /// <returns>The product of the array.</returns>
+        static int ArrayProduct(int[] array)
+        {
+            int product = 1;
+            foreach (int i in array)
+            {
+                product *= i;
+            }
+            return product;
         }
 
         /// <summary>
@@ -129,16 +164,22 @@ namespace Challenge
 
         static void Main(string[] args)
         {
+            // Challenge 3
+            int[] sequence = GenerateArray();
+            PrintArray(sequence);
+            if (PerfectSequence(sequence)) Console.WriteLine(" Is a perfect sequence!");
+            else Console.WriteLine(" Is not a perfect sequence.");
+
             // Challenge 4
-            int[,] testArray = Generate2dArray();
+            //int[,] testArray = Generate2dArray();
 
-            Console.WriteLine("\nInput:");
-            Print2dArray(testArray);
+            //Console.WriteLine("\nInput:");
+            //Print2dArray(testArray);
 
-            int[] sumArray = SumOfRows(testArray);
+            //int[] sumArray = SumOfRows(testArray);
 
-            Console.WriteLine("\nOutput:");
-            PrintArray(sumArray);
+            //Console.WriteLine("\nOutput:");
+            //PrintArray(sumArray);
 
             Console.ReadKey();
         }
