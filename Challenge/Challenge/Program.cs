@@ -24,6 +24,21 @@ namespace Challenge
         }
 
         /// <summary>
+        /// Finds the sum of a single-dimensional array of integers.
+        /// </summary>
+        /// <param name="array">A single-dimensional array of integers.</param>
+        /// <returns>The sum of the array.</returns>
+        static int ArraySum(int[] array)
+        {
+            int sum = 0;
+            foreach(int i in array)
+            {
+                sum += i;
+            }
+            return sum;
+        }
+
+        /// <summary>
         /// Finds the sum of each row in a 2-dimensional array of integers.
         /// </summary>
         /// <param name="array2d">The 2-dimensional array being added together.</param>
@@ -33,10 +48,8 @@ namespace Challenge
             int[] sumArray = new int[array2d.GetLength(0)];
             for (int i = 0; i < sumArray.Length; i++)
             {
-                for (int j = 0; j < array2d.GetLength(1); j++)
-                {
-                    sumArray[i] += array2d[i, j];
-                }
+                int[] sub = Enumerable.Range(0, array2d.GetLength(1)).Select(j => array2d[i, j]).ToArray();
+                sumArray[i] = ArraySum(sub);
             }
             return sumArray;
         }
@@ -108,7 +121,7 @@ namespace Challenge
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    array[i, j] = rng.Next(-10, 10);
+                    array[i, j] = rng.Next(-10, 11);
                 }
             }
             return array;
